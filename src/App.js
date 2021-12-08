@@ -1,41 +1,56 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css';
 
 function App() {
   const dispatch = useDispatch();
+  const globalState = useSelector((state) => state);
 
-  const state = useSelector((state) => {
-    if (state.value < 1) {
-      return 'no number';
-    }
-    return state.value;
-  });
-
-  const increase = () => {
-    const action = { type: 'increase', payload: 4 };
-    dispatch(action);
+  const counterOperation = (type, payload) => {
+    dispatch({ type, payload });
   };
 
-  const decrease = () => {
-    const action = { type: 'decrease', payload: 2 };
-    dispatch(action);
+  const handlerCounterValue = (value) => {
+    if (value < 1) {
+      return 'no number';
+    }
+    return value;
+  };
+
+  const toggleCounter = () => {
+    console.log('sad');
+    dispatch({ type: 'toggleCounter' });
   };
 
   return (
     <div className='App'>
       <h1>Hello Redux Basic</h1>
-      <div className='counter'>Counter: {state}</div>
-      <div>
-        <button className='btn' onClick={increase}>
-          increase +
-        </button>
-        <button className='btn' onClick={decrease}>
-          decrease -
-        </button>
-      </div>
+      {globalState.showCounter && (
+        <>
+          <div className='counter'>
+            Counter: {handlerCounterValue(globalState.value)}
+          </div>
+          <div>
+            <button
+              className='btn'
+              onClick={() => counterOperation('increase', 5)}
+            >
+              increase +
+            </button>
+            <button
+              className='btn'
+              onClick={() => counterOperation('decrease', 2)}
+            >
+              decrease -
+            </button>
+          </div>
+        </>
       )}
+
       <div>
-        <button className='btn'>Hide/Show Counter Number</button>
+        <button className='btn' onClick={toggleCounter}>
+          Hide/Show Counter Number
+        </button>
       </div>
     </div>
   );
