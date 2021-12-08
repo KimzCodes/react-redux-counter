@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css';
 
@@ -6,9 +6,22 @@ function App() {
   const dispatch = useDispatch();
   const globalState = useSelector((state) => state);
 
-  const counterOperation = (type, payload) => {
-    dispatch({ type, payload });
-  };
+  const counterOperation = useCallback(
+    (type, payload) => {
+      dispatch({ type, payload });
+    },
+    [dispatch]
+  );
+
+  //react init
+  //useEffect run -> action -> 10
+  //re render
+  //re revalute
+  //useEffect run -> action -> 10
+  //re render
+  //re revalute
+
+  useEffect(() => counterOperation('increase', 10), [counterOperation]);
 
   const handlerCounterValue = (value) => {
     if (value < 1) {
