@@ -4,7 +4,7 @@ function App() {
   return (
     <div className='App'>
       <h1>Hello Redux Basic</h1>
-      <div className='counter'>Counter: 0</div>;
+      <div className='counter'>Counter: 0</div>
       <div>
         <button className='btn'>increase +</button>
         <button className='btn'>decrease -</button>
